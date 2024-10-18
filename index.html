@@ -16,37 +16,47 @@
         }
         canvas {
             border: 1px solid #000;
-            display: none;
+            margin-bottom: 20px;
         }
-        #enterButton {
+        #enterButton, #tableButton {
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
         }
+        
     </style>
 </head>
 <body>
-    <button id="enterButton">Enter Mime Library</button>
     <canvas id="mimeCanvas"></canvas>
+    <button id="enterButton">Enter</button>
+    
     <script src="mime.js"></script>
     <script>
-        const enterButton = document.getElementById('enterButton');
-        const mimeCanvas = document.getElementById('mimeCanvas');
+        const canvas = document.getElementById('mimeCanvas');
+        const ctx = canvas.getContext('2d');
 
-        function showMimeAnimation() {
-            enterButton.style.display = 'none';
-            mimeCanvas.style.display = 'block';
-            // Assuming mime.js has a function to start the animation
-            if (typeof startMimeAnimation === 'function') {
-                startMimeAnimation();
-            }
-        }
+        // Set canvas size
+        canvas.width = 300;
+        canvas.height = 150;
 
-        enterButton.addEventListener('click', showMimeAnimation);
+        // Fill canvas with "Welcome :)"
+        ctx.fillStyle = '#f0f0f0';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.font = '30px Arial';
+        ctx.fillStyle = 'black';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('Welcome :)', canvas.width / 2, canvas.height / 2);
+
+        document.getElementById('enterButton').addEventListener('click', function() {
+            // Add your enter button functionality here
+        });
+
+        
 
         document.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
-                showMimeAnimation();
+                document.getElementById('enterButton').click();
             }
         });
     </script>
