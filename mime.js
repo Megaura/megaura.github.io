@@ -24,14 +24,25 @@ function drawMime(waveAngle) {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Draw hat (higher)
+    // Draw sun-like hat
     ctx.beginPath();
-    ctx.moveTo(70, 60);  // Moved up by 10 pixels
-    ctx.lineTo(130, 60); // Moved up by 10 pixels
-    ctx.lineTo(100, 20); // Moved up by 20 pixels to make it taller
-    ctx.closePath();
-    ctx.fillStyle = 'black';
+    ctx.arc(100, 40, 20, 0, Math.PI * 2);
+    ctx.fillStyle = 'yellow';
     ctx.fill();
+    ctx.strokeStyle = 'orange';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Draw sun rays
+    for (let i = 0; i < 8; i++) {
+        ctx.beginPath();
+        const angle = i * Math.PI / 4;
+        ctx.moveTo(100 + Math.cos(angle) * 20, 40 + Math.sin(angle) * 20);
+        ctx.lineTo(100 + Math.cos(angle) * 30, 40 + Math.sin(angle) * 30);
+        ctx.strokeStyle = 'orange';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+    }
 
     // Draw smiling eyes
     ctx.beginPath();
