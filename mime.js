@@ -24,11 +24,11 @@ function drawMime(waveAngle) {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Draw hat
+    // Draw hat (higher)
     ctx.beginPath();
-    ctx.moveTo(70, 70);
-    ctx.lineTo(130, 70);
-    ctx.lineTo(100, 40);
+    ctx.moveTo(70, 60);  // Moved up by 10 pixels
+    ctx.lineTo(130, 60); // Moved up by 10 pixels
+    ctx.lineTo(100, 20); // Moved up by 20 pixels to make it taller
     ctx.closePath();
     ctx.fillStyle = 'black';
     ctx.fill();
