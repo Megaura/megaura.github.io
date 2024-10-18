@@ -7,6 +7,7 @@
     <style>
         body {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -15,11 +16,39 @@
         }
         canvas {
             border: 1px solid #000;
+            display: none;
+        }
+        #enterButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
+    <button id="enterButton">Enter Mime Library</button>
     <canvas id="mimeCanvas"></canvas>
     <script src="mime.js"></script>
+    <script>
+        const enterButton = document.getElementById('enterButton');
+        const mimeCanvas = document.getElementById('mimeCanvas');
+
+        function showMimeAnimation() {
+            enterButton.style.display = 'none';
+            mimeCanvas.style.display = 'block';
+            // Assuming mime.js has a function to start the animation
+            if (typeof startMimeAnimation === 'function') {
+                startMimeAnimation();
+            }
+        }
+
+        enterButton.addEventListener('click', showMimeAnimation);
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                showMimeAnimation();
+            }
+        });
+    </script>
 </body>
 </html>
