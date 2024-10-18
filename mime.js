@@ -24,6 +24,28 @@ function drawMime(waveAngle) {
     ctx.lineWidth = 2;
     ctx.stroke();
 
+    // Draw hat
+    ctx.beginPath();
+    ctx.moveTo(70, 70);
+    ctx.lineTo(130, 70);
+    ctx.lineTo(100, 40);
+    ctx.closePath();
+    ctx.fillStyle = 'black';
+    ctx.fill();
+
+    // Draw smiling eyes
+    ctx.beginPath();
+    ctx.arc(90, 65, 5, 0.2 * Math.PI, 0.8 * Math.PI);
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(110, 65, 5, 0.2 * Math.PI, 0.8 * Math.PI);
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
     // Draw smile
     ctx.beginPath();
     ctx.arc(100, 75, 20, 0.2 * Math.PI, 0.8 * Math.PI);
@@ -31,11 +53,13 @@ function drawMime(waveAngle) {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Draw waving arm
+    // Draw waving arm (radial motion)
     ctx.beginPath();
     ctx.moveTo(120, 110);
-    ctx.lineTo(140, 90);
-    ctx.lineTo(160, 90 + Math.sin(waveAngle) * 20);
+    const armAngle = Math.sin(waveAngle) * Math.PI / 6; // Slower, radial motion
+    const armEndX = 120 + Math.cos(armAngle) * 40;
+    const armEndY = 110 - Math.sin(armAngle) * 40;
+    ctx.lineTo(armEndX, armEndY);
     ctx.strokeStyle = 'black';
     ctx.lineWidth = 10;
     ctx.stroke();
@@ -44,7 +68,7 @@ function drawMime(waveAngle) {
 // Animation loop
 let waveAngle = 0;
 function animate() {
-    waveAngle += 0.1;
+    waveAngle += 0.05; // Slower animation speed
     drawMime(waveAngle);
     requestAnimationFrame(animate);
 }
