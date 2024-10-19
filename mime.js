@@ -161,21 +161,6 @@ function drawArrowPointingAtTable(ctx) {
     ctx.lineWidth = 3;
     ctx.stroke();
     ctx.restore();
-
-    // Add click event listener to the canvas
-    var canvas = ctx.canvas;
-    canvas.addEventListener('click', function(event) {
-        var rect = canvas.getBoundingClientRect();
-        var x = event.clientX - rect.left;
-        var y = event.clientY - rect.top;
-
-        // Check if the click is within the arrow area
-        if (x >= 160 && x <= 160 && y >= 45 && y <= 90) {
-            // Change the canvas to brown
-            ctx.fillStyle = 'Blue';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-        }
-    });
 }
 
 // Function to zoom into the table
@@ -219,11 +204,60 @@ function zoomIntoTable() {
             canvas.addEventListener('click', handleSunClick);
             // Draw a black arrow pointing at the table
             drawArrowPointingAtTable(ctx);
+            // Draw an atom below the arrow
+            drawAtom(ctx);
         }
     }
 
     // Start the zoom animation
     animateZoom();
+}
+
+// Function to draw an atom
+function drawAtom(ctx) {
+    const centerX = 150;
+    const centerY = 115; // Moved up by 10 pixels
+    const radius = 20;
+
+    // Draw nucleus
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+    ctx.fillStyle = 'red';
+    ctx.fill();
+
+    // Draw electron orbits
+    for (let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.ellipse(centerX, centerY, radius, radius / 2, i * Math.PI / 3, 0, 2 * Math.PI);
+        ctx.strokeStyle = 'blue';
+        ctx.stroke();
+    }
+
+    // Draw electrons
+    for (let i = 0; i < 3; i++) {
+        const angle = i * 2 * Math.PI / 3;
+        const x = centerX + radius * Math.cos(angle);
+        const y = centerY + (radius / 2) * Math.sin(angle);
+        ctx.beginPath();
+        ctx.arc(x, y, 2, 0, 2 * Math.PI);
+        ctx.fillStyle = 'blue';
+        ctx.fill();
+    }
+
+    // Add click event listener to the atom
+    const canvas = ctx.canvas;
+    canvas.addEventListener('click', function(event) {
+        const rect = canvas.getBoundingClientRect();
+        const clickX = event.clientX - rect.left;
+        const clickY = event.clientY - rect.top;
+        
+        // Check if the click is within the atom area
+        const distance = Math.sqrt(Math.pow(clickX - centerX, 2) + Math.pow(clickY - centerY, 2));
+        if (distance <= radius) {
+            // Redirect to web2.html
+            window.location.href = 'web2.html';
+        }
+    });
 }
 
 // Function to handle table click
@@ -271,6 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
         enterButton.addEventListener('click', () => {
             isArmAnimating = false; // Stop arm animation
             cleanTable();
+            enterButton.remove(); // Remove Enter button when pressed
         });
     }
 
@@ -320,19 +355,7 @@ function handleSunClick(event) {
 
     if (distance <= sunRadius) {
         console.log('Sun clicked!');
-        
-        // Clear the entire canvas
-        var ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Make the entire page blank
-        document.body.style.backgroundColor = 'white';
-        canvas.style.display = 'none';
-
-        // Remove all other elements from the body
-        while (document.body.firstChild) {
-            document.body.removeChild(document.body.firstChild);
-        }
+        // You can add alternative functionality here if needed
     }
 }
 
